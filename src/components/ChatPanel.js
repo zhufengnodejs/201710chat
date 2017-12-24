@@ -26,7 +26,7 @@ export default class ChatPanel extends Component {
           <ul className="list-group">
             {
               this.props.messages.map((item,index)=>(
-                <li key={index} className="list-group-item">{item}</li>
+                <li key={index} className="list-group-item">{item.username}:{item.content} <span className="pull-right">{item.createAt&&item.createAt.toLocaleString()}</span></li>
               ))
             }
           </ul>
