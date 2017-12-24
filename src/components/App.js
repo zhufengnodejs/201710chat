@@ -24,6 +24,9 @@ export default class App extends Component {
     socket.on('addUser',(username)=>{
       this.setState({users:[...this.state.users,username]});
     });
+    socket.on('users',(users)=>{
+      this.setState({users});
+    });
   }
   render() {
     return (

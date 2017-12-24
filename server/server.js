@@ -12,6 +12,8 @@ const SYSTEM = '系统';
 const USERS = {};//存放着所有的用户名和它们的socket对象之间的关系
 io.on('connection', function (socket) {
   socket.send({username:SYSTEM, content:'请设置用户名', createAt: new Date()});
+  //当新的用户连接的时候，把当前的用户列表发给此新的客户端
+  socket.emit('users',Object.keys(USERS));
   //在函数内部放置一个变量,存来此客户端的用户名
   let username;
   socket.on('message', function (message) {
