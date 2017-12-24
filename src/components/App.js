@@ -8,7 +8,9 @@ import UserPanel from "./UserPanel";
 export default class App extends Component {
   constructor(){
     super();
-    this.state = {socket:null,messages:[]};
+    this.state = {socket:null,
+      users:[],//存放着所有的在线用户
+      messages:[]};
   }
   componentDidMount(){
     let socket = window.io('http://localhost:8080');
@@ -17,8 +19,10 @@ export default class App extends Component {
     });
     //客户端监听服务器发过来的消息
     socket.on('message',(msgObj)=>{
-      console.log(msgObj);
       this.setState({messages:[...this.state.messages,msgObj]});
+    });
+    socket.on('addUser',(username)=>{
+      this.setState({users:[...this.state.users,username]});
     });
   }
   render() {
@@ -29,7 +33,7 @@ export default class App extends Component {
               <ChatPanel messages={this.state.messages} socket={this.state.socket}/>
           </div>
           <div className="col-xs-3">
-              <UserPanel/>
+              <UserPanel users={this.state.users}/>
           </div>
         </div>
       </div>
