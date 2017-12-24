@@ -10,7 +10,8 @@ let io = require('socket.io')(server);
 //socket插座
 io.on('connection',function(socket){
 　socket.on('message',function(message){
-   console.log(message);
+   //向所有的客户端发广播
+   io.emit('message',message);
  });
 });
 server.listen(8080);

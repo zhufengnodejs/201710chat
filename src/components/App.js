@@ -6,13 +6,18 @@ import UserPanel from "./UserPanel";
  * socket.io包括服务器端的node.js和客户端的js
  */
 export default class App extends Component {
+  constructor(){
+    super();
+    this.state = {socket:null,messages:[]};
+  }
   componentDidMount(){
     let socket = window.io('http://localhost:8080');
-    socket.on('connect',function(){//建立连接成功
-       console.log('connect');
+    socket.on('connect',()=>{//建立连接成功
+       this.setState({socket});
     });
-    socket.on('disconnect',function(){//断开连接
-      console.log('disconnect');
+    //客户端监听服务器发过来的消息
+    socket.on('message',(message)=>{
+      this.setState({messages:[...this.state.messages,message]});
     });
   }
   render() {
@@ -20,7 +25,7 @@ export default class App extends Component {
       <div className="container" style={{marginTop:'20px'}}>
         <div className="row">
           <div className="col-xs-9">
-              <ChatPanel/>
+              <ChatPanel messages={this.state.messages} socket={this.state.socket}/>
           </div>
           <div className="col-xs-3">
               <UserPanel/>

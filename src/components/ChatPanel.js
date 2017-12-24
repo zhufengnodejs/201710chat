@@ -1,5 +1,21 @@
 import React, {Component} from 'react';
 export default class ChatPanel extends Component {
+  send = ()=>{
+   let content = this.content.value;
+   //发送消息消息
+    if(content!=""){
+      this.props.socket.send(content);
+      this.content.value = '';
+    }
+    else
+      alert('发言内容不能为空!');
+  }
+  handleKeyDown = (event)=>{
+    let code = event.keyCode;
+    if(code == 13){
+      this.send();
+    }
+  }
   render() {
     return (
       <div className="panel panel-default">
@@ -8,16 +24,22 @@ export default class ChatPanel extends Component {
         </div>
         <div className="panel-body">
           <ul className="list-group">
-
+            {
+              this.props.messages.map((item,index)=>(
+                <li key={index} className="list-group-item">{item}</li>
+              ))
+            }
           </ul>
         </div>
         <div className="panel-footer">
           <div className="row">
             <div className="col-xs-10">
-              <input type="text" className="form-control"/>
+              <input ref={input=>this.content = input} type="text"
+                     onKeyDown={this.handleKeyDown}
+                     className="form-control"/>
             </div>
             <div className="col-xs-2">
-              <input type="button" className="btn btn-primary"/>
+              <input onClick={this.send} type="button" className="btn btn-primary" value="发言"/>
             </div>
           </div>
         </div>
