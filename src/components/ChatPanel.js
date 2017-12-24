@@ -13,8 +13,12 @@ export default class ChatPanel extends Component {
         </div>
         <div className="panel-footer">
           <div className="row">
-            <div className="col-xs-10"><input type="text" className="form-control"/></div>
-            <div className="col-xs-2"><input type="submit" className="btn btn-primary"/></div>
+            <div className="col-xs-10">
+              <input type="text" className="form-control"/>
+            </div>
+            <div className="col-xs-2">
+              <input type="button" className="btn btn-primary"/>
+            </div>
           </div>
         </div>
       </div>
