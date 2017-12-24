@@ -5,7 +5,7 @@ import UserPanel from "./UserPanel";
 export default class App extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{marginTop:'20px'}}>
         <div className="row">
           <div className="col-xs-9">
               <ChatPanel/>
