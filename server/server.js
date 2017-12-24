@@ -18,7 +18,17 @@ io.on('connection', function (socket) {
   let username;
   socket.on('message', function (message) {
     if (username) {//意味着不是第一次
-      io.emit('message', {username, content:message, createAt: new Date()});
+      //先判断此消息是公聊还是私聊
+      let reg = /@([^ ]+) (.+)/;
+      let result = message.match(reg);
+      if(result){//如果正则匹配的话就意味着是私聊
+        let toUser = result[1];//获取对方的用户名
+        let content = result[2];//获取第二个分组向对方说的话
+        //如果对方在线的话，就只向那个人说话
+        USERS[toUser]&&USERS[toUser].send({username, content, createAt: new Date()});
+      }else{
+        io.emit('message', {username, content:message, createAt: new Date()});
+      }
     } else {
       //把客户端发过来的消息存储为用户名
       if(USERS[message]){//如果能取出来的值表示此用户名用过了
