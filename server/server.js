@@ -33,5 +33,13 @@ io.on('connection', function (socket) {
 
     }
   });
+  socket.on('disconnect',function () {
+    if(username){
+      io.emit('message', {username: SYSTEM, content: `${username}离开了聊天室`, createAt: new Date()});
+      //通知前台把此用户名从用户列表里删除
+      io.emit('delUser',username);
+      delete USERS[username];
+    }
+  });
 });
 server.listen(8080);

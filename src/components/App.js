@@ -27,6 +27,9 @@ export default class App extends Component {
     socket.on('users',(users)=>{
       this.setState({users});
     });
+    socket.on('delUser',(username)=>{
+     this.setState({users:this.state.users.filter(item=>item!=username)});
+    });
   }
   render() {
     return (
@@ -49,5 +52,6 @@ export default class App extends Component {
  * 2.服务器收到消息后，向所有的客户端广播此消息。
  * 3.所有的客户端收到消息后会把消息添加到自己的消息列表中展示给用户
  * 二　具名聊天
+ * 三　私聊　
  * 三　持久化消息
  **/

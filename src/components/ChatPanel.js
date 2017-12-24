@@ -16,6 +16,10 @@ export default class ChatPanel extends Component {
       this.send();
     }
   }
+  clickUserName = (event)=>{
+    if(event.target.innerText!='系统')
+      this.content.value = `@${event.target.innerText} `;
+  }
   render() {
     return (
       <div className="panel panel-default">
@@ -26,7 +30,7 @@ export default class ChatPanel extends Component {
           <ul className="list-group">
             {
               this.props.messages.map((item,index)=>(
-                <li key={index} className="list-group-item">{item.username}:{item.content} <span className="pull-right">{item.createAt&&new Date(item.createAt).toLocaleString()}</span></li>
+                <li key={index} className="list-group-item"><span onClick={this.clickUserName} style={{color:'green',cursor:'pointer'}}>{item.username}</span>:{item.content} <span className="pull-right">{item.createAt&&new Date(item.createAt).toLocaleString()}</span></li>
               ))
             }
           </ul>
